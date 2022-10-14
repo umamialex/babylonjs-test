@@ -6,15 +6,23 @@ import {
 } from 'react-babylonjs'
 import './App.css'
 
-import { Vector3 } from "@babylonjs/core/Maths/math.vector"
+import {
+  Color3,
+  Color4,
+  Mesh,
+  Vector3,
+} from "@babylonjs/core"
 import "@babylonjs/loaders"
 
 
 function App() {
+  console.log(Mesh)
   return (
     <div className="App">
       <Engine antialias adaptToDeviceRatio canvasId="babylonJS">
-        <Scene>
+        <Scene
+          onSceneMount={({ scene }) => {scene.clearColor = new Color4(0,0,0,0)}}
+        >
           <universalCamera
             name="camera1"
             position={new Vector3(0,0,0)}
@@ -26,6 +34,33 @@ function App() {
           />
           <Chest name="chest" position={new Vector3(0,0,0)}/>
           <Bomb name="chest" position={new Vector3(0,0,0)}/>
+          <ground
+            name="ground1"
+            width={50}
+            height={3000}
+            position={new Vector3(0,-14,-130)}
+          >
+            <standardMaterial
+              diffuseColor={Color3.White()}
+            >
+              <texture url="https://as2.ftcdn.net/v2/jpg/02/42/50/91/1000_F_242509177_NyC9JFDRAFiSaZmE9aU6lxDqhLcgCcPP.jpg"/>
+            </standardMaterial>
+          </ground>
+          <plane
+            name="ground2"
+            width={50}
+            height={3000}
+            position={new Vector3(0,15,-130)}
+          rotation={new Vector3(-Math.PI/2,Math.PI,0)}
+            sideOrientation={Mesh.DOUBLESIDE}
+          >
+            <standardMaterial
+              diffuseColor={Color3.White()}
+              backFaceCulling={false}
+            >
+              <texture url="https://as2.ftcdn.net/v2/jpg/02/42/50/91/1000_F_242509177_NyC9JFDRAFiSaZmE9aU6lxDqhLcgCcPP.jpg"/>
+            </standardMaterial>
+          </plane>
         </Scene>
       </Engine>
     </div>
